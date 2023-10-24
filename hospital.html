@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+	<script src = "./node_modules/web3/dist/web3.min.js"></script>
+	<script type="text/javascript" src = "connection.js"></script>
+
+</head>
+<body>
+    <header class="text-gray-600 body-font">
+		<div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+		  <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
+			  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+			</svg>
+			<span class="ml-3 text-xl">Healthify</span>
+		  </a>
+		  <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+			<a class="mr-5 hover:text-gray-900">First Link</a>
+			<a class="mr-5 hover:text-gray-900">Second Link</a>
+			<a class="mr-5 hover:text-gray-900">Third Link</a>
+			<a class="mr-5 hover:text-gray-900">Fourth Link</a>
+		  </nav>
+		  <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Login
+			<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+			  <path d="M5 12h14M12 5l7 7-7 7"></path>
+			</svg>
+		  </button>
+		</div>
+	  </header>
+      <div class="example">
+		<h2><b>Register as a hospital</b></h2>
+        <form>
+            <input id="hospitalName" type="text"  placeholder="Enter your hospital name here"></input><br><br>
+            <input id="hospitalRegNo" type="number" placeholder="Enter your registration no here"></input><br><br>
+            <input id="hospitalWalletAddress" type="text" placeholder="Enter your wallet address here"></input><br><br><br>
+            <button id="registerHospital" type="button">Register Hospital</button>
+        </form>
+      </div>
+
+	  <div class="example">
+		  <h2><b>Generate Bill</h2>
+        <form>
+            <input id="patientAddress" type="text"  placeholder="Enter patient address here"></input><br><br>
+            <input id="billAmount" type="number" placeholder="Enter bill amount"></input><br><br>
+            <input id="billDescription" type="text" placeholder="Description"></input><br><br><br>
+            <button id="generateBill" type="button">Generate Bill</button>
+        </form>
+      </div>
+
+	  
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+      
+    <script>
+       
+        console.log(insurance);  
+
+      var userAddressForSession = localStorage.getItem("userAddress");
+      console.log("Session Address : ",userAddressForSession);
+
+    	$("#registerHospital").click(function(){
+            
+            console.log("registerHospital function called");
+            var x = document.getElementById("hospitalName").value;
+            console.log(x);
+            var y = document.getElementById("hospitalRegNo").value;
+            console.log(y);
+            var z = document.getElementById("hospitalWalletAddress").value;
+            console.log(z);
+            //insurance.registerhospital(x,y,z,{from: z, gas:977710},);
+			//console.log("Registered");
+			//web3.eth.getBalance(z).then(console.log);
+			//console.log(web3.eth.getBalance(z));
+			if(insurance.hospitalmapping(z).isalreadyexisting == "false"){
+				console.log(insurance.hospitalmapping(z).hospitalWalletAddress);
+				console.log("registering hospital...");
+			//var eastimatedGas = web3.eth.eastimatedGas({to : '0x2F254a13bb2bCf6752580C4dB7B4D7D954f1E06F', data : z}).then(console.log);
+				insurance.registerhospital(x,y,z, {from: z, gas:977710});
+				//console.log(msg);
+				console.log("Hospital registration successful!!");
+			}
+			else	console.log("Hospital Already registered"); 
+            
+        }); 
+
+		$('#generateBill').click(function(){
+			console.log("generateBill called")
+			var y = document.getElementById("billAmount").value;
+			console.log(y);
+			var x = document.getElementById("patientAddress").value;
+			console.log(x);
+			
+			var z = document.getElementById("billDescription").value;
+			console.log(z);
+			if(insurance.customerData(x).alreadyexists == "false")
+				console.log("No such patient found");
+			else{
+				insurance.generatebBillforpatient(x,y,z, {from: userAddressForSession, gas: 977710});
+				console.log("Bill generated successfully");
+			}	
+		});
+
+    </script>
+</body>
+</html>

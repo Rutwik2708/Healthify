@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Disburse Claim</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> 
+  
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
+  
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  
+    <script src = "./node_modules/web3/dist/web3.min.js"></script>
+    <script type="text/javascript" src = "connection.js"></script>
+  
+  
+  </head>
+  <body>
+		
+    <style>
+      #child1 {
+position: absolute;
+top: 500px;
+left: 28px;
+color: grey;
+}
+
+  </style>
+			<div class="wrapper d-flex align-items-stretch">
+                <nav id="sidebar">
+                    <div class="custom-menu">
+                        <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                </button>
+            </div>
+                  <div class="img bg-wrap text-center py-4" style="background-image: url(images/bg_1.jpg);">
+                      <div class="user-logo">
+                          <div class="img" style="background-image: url(images/profile.png);"></div>
+                          <h3><p style="color: white; font-size: 11px;" id="addressid"></p></h3>
+                      </div>
+                  </div>
+            <ul class="list-unstyled components mb-5">
+              <li class="active">
+                <a href="Company_Homepage.html"><span class="fa fa-home mr-3"></span> Profile</a>
+              </li>
+              <li>
+                <a href="AddNewPolicy.html"><span class="fa fa-gift mr-3"></span> Add Policy</a>
+              </li>
+              <li>
+                <a href="#"><span class="fa fa-gift mr-3"></span> Verify User</a>
+              </li>
+              <li>
+                <a href="Verify Hospital.html"><span class="fa fa-trophy mr-3"></span>Verify Hospital</a>
+              </li>
+              <li>
+                <a href="DisburseClaim.html"><span class="fa fa-cog mr-3"></span> Disburse Claim</a>
+              </li>
+              <li>
+                <a id="logout"><span class="fa fa-sign-out mr-3"></span>Logout</a>
+              </li>
+            </ul>
+            </nav>
+    
+      
+      <div id="content" class="p-4 p-md-5 pt-5">
+        <h2 class="mb-4"><p style="color:white;">User Profile</p></h2>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+
+    <div class="centeralign">
+      <form action="/" class="decor">
+        <div class="form-left-decoration"></div>
+        <div class="form-right-decoration"></div>
+        <!--<div class="circle"></div>-->
+        <div class="form-inner">
+          <h1>Disburse Claim</h1>
+          <input id="claimID" type="text" placeholder="claim ID">
+          <button id="claimDisbursement" type="button">Submit</button>
+        </div>
+    </div>
+      </form>
+    </div>
+
+  
+  <script>
+
+      console.log(insurance);  
+      var userAddressForSession = localStorage.getItem("userAddress");
+      console.log("Session Address : ",userAddressForSession);
+      console.log(insurance);  
+      document.getElementById('addressid').innerHTML = userAddressForSession;
+
+
+      $("#claimDisbursement").click(function(){
+            var claimID = document.getElementById("claimID").value;
+            console.log(claimID);
+            var premiumAmt = insurance.policiesAvailable(901)[7].c[0];
+            console.log(premiumAmt);
+            var settledAmt= insurance.claims(claimID)[7];
+            console.log(settledAmt);
+            var customerAddress=insurance.claims(claimID)[8];
+            console.log(customerAddress);
+
+            web3.eth.sendTransaction({from: userAddressForSession, to: customerAddress, value: settledAmt});
+            insurance.DisburseClaimamount(claimID);//, function(err, res){});
+			      alert("Claim Settled");
+            console.log("Claim settled");
+		});
+
+      $("#logout").click(function(){
+			localStorage.setItem("userAddress", null);
+			alert("Logging out");
+      window.location.href = "home.html";
+
+		});
+
+  </script>
+
+    <style>
+      * {
+      box-sizing: border-box;
+      }
+      html, body {
+      min-height: 100vh;
+      padding: 0;
+      margin: 0;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 14px; 
+      color: #666;
+      }
+      input, textarea { 
+      outline: none;
+      }
+      body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background: #111827;
+      }
+      h1 {
+      margin-top: 0;
+      font-weight: 500;
+      }
+      form {
+      position: relative;
+      width: 80%;
+      border-radius: 30px;
+      background: #fff;
+      }
+      .form-left-decoration,
+      .form-right-decoration {
+      content: "";
+      position: absolute;
+      width: 50px;
+      height: 20px;
+      border-radius: 20px;
+      background: #111827;
+      }
+      .form-left-decoration {
+      bottom: 60px;
+      left: -30px;
+      }
+      .form-right-decoration {
+      top: 60px;
+      right: -30px;
+      }
+      .form-left-decoration:before,
+      .form-left-decoration:after,
+      .form-right-decoration:before,
+      .form-right-decoration:after {
+      content: "";
+      position: absolute;
+      width: 50px;
+      height: 20px;
+      border-radius: 30px;
+      background: #fff;
+      }
+      .form-left-decoration:before {
+      top: -20px;
+      }
+
+      .centeralign{
+          top:0px;
+          left: 160px;
+          position: relative;
+      }
+      .form-left-decoration:after {
+      top: 20px;
+      left: 10px;
+      }
+      .form-right-decoration:before {
+      top: -20px;
+      right: 0;
+      }
+      .form-right-decoration:after {
+      top: 20px;
+      right: 10px;
+      }
+      .circle {
+      position: absolute;
+      bottom: 80px;
+      left: -55px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #fff;
+      }
+      .form-inner {
+      padding: 40px;
+      }
+      .form-inner input,
+      .form-inner textarea {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 10px;
+      border: none;
+      border-radius: 20px;
+      background: #d0dfe8;
+      }
+      .form-inner textarea {
+      resize: none;
+      }
+      button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 20px;
+      border-radius: 20px;
+      border: none;
+      border-bottom: 4px solid #111827;
+      background: #111827; 
+      font-size: 16px;
+      font-weight: 400;
+      color: #fff;
+      }
+      button:hover {
+      background: #111827;
+      } 
+      @media (min-width: 568px) {
+      form {
+      width: 60%;
+      }
+      }
+    </style>
+
+    </body>
+    </html>
