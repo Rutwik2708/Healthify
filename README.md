@@ -7,7 +7,8 @@ Health Insurance claim processing using Blockchain
 ## Registration Pages
 ![image](https://github.com/user-attachments/assets/0cd27647-bd92-4c02-9862-c036ecebc76c)
 
-<img width="1706" alt="Screenshot 2024-08-02 at 9 33 16 AM" src="https://github.com/user-attachments/assets/590b4ceb-a314-4647-abb1-c11e2a18d67c">
+![image](https://github.com/user-attachments/assets/67f1b420-73f7-42a4-8123-57f0a15af0b7)
+
 
 ## Insurance Company Page
 
